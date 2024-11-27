@@ -46,10 +46,25 @@ export const registerUsers =async (req:Request,res:Response):Promise<any>=>{
     }
 }
 
-export const singin = async (req:Request, res:Response): Promise<void>=>{
-// carreo y contraseña
-    //verrificar que el urusairo existe
-    const user = await UserModel.findOne({correo:req.body.email,password:req.body.password});
-    //si no existe devuelven error
-    //si existe devuelven un token
-}
+export const singin = async (req:Request, res:Response): Promise<any>=>{
+        try {
+            const user = await UserModel.findOne({email:req.body.email, password:req.body.password})
+            
+           if(!user){
+            return res.status(400).json({
+                msg:"no hay coinciedencia en el sistema"
+            })
+            
+           }
+           const token = jwt.sign(JSON.stringify(user),"pocoyo");
+           return res.status(200).json({msg:"Inicio de sesion correcto",token})
+
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({
+                msg:"Hubo un error al iniciar sesion"
+            })
+        }
+    
+    
+    }
