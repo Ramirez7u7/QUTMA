@@ -1,6 +1,7 @@
 import express, { Application, Request, Response } from "express";
 import cors from "cors";
 import {registerUsers, singin} from "./Constrollers/UserController"
+import { CreateQuestionnaires } from "./Constrollers/QuestionnairesController";
 
 const app: Application = express();
 
@@ -16,5 +17,5 @@ app.get("/", (_req: Request, res: Response) => {
 //usuarios papu
 app.post("/users/create",registerUsers)
 app.post("/users/login",singin)
-
+app.post("/users/Questionnaires", CreateQuestionnaires)
 export default app;
