@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
-import { useNavigate } from 'react-router-dom';
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const App = () => {
   const [data, setData] = useState({});
   const navigate = useNavigate();
-
   const onChange = (e) => {
     e.preventDefault();
     const loginData = data;
@@ -15,15 +14,20 @@ const App = () => {
   }
 
   const onSubmit = async () => {
-    /* Enviar data al server */
     try {
-        data.rol="client"
-        await axios.post("http://localhost:4000/users/login",data)
-        navigate("/list-users")
+      const res = await axios.post("http://localhost:4000/users/sign-in", data);
+      const user = res.data.user;
+      user.logined = true;
+      localStorage.user = JSON.stringify(user)
+      if(user.rol == "administrator"){
+        navigate("/home")
+      }else{
+        navigate("/list-q")
+      }
     } catch (error) {
-        alert("hubo un error")
+      alert("Incorrecto")
     }
-}
+  }
 
   return (
     <Container className="mt-3">

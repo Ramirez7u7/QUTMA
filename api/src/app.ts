@@ -1,7 +1,8 @@
 import express, { Application, Request, Response } from "express";
 import cors from "cors";
-import {registerUsers, singin} from "./Constrollers/UserController"
-import { CreateQuestionnaires } from "./Constrollers/QuestionnairesController";
+import { registerUsers, singIn } from "./Constrollers/UserController.js"
+import { createQuizz, getMetrics, getQuestionnaires } from "./Constrollers/QuestionnairesController.js"
+
 
 const app: Application = express();
 
@@ -14,8 +15,12 @@ app.get("/", (_req: Request, res: Response) => {
     res.send("Hola desde mi servidor con TS");
 })
 
-//usuarios papu
-app.post("/users/create",registerUsers)
-app.post("/users/login",singin)
-app.post("/users/Questionnaires", CreateQuestionnaires)
+//Usuarios
+app.post("/users/create", registerUsers)
+app.post("/users/sign-in", singIn)
+
+app.post("/questionnaire/create", createQuizz)
+app.get("/questionnaire/get-metrics", getMetrics)
+app.get("/questionnaires/get-all", getQuestionnaires)
+
 export default app;

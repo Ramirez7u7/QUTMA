@@ -3,7 +3,6 @@ import { ListQuestionnaires } from './components/ListQuestionnaires';
 
 export const ShowQuestionnaires = () => {
     const user = JSON.parse(localStorage.user);
-
     return (
         <Container>
             <Card>
